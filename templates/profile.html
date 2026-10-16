@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Candidate Profile — Career GPS{% endblock %}
+{% block content %}
+<div class="stepper">
+  <span class="step active">Profile</span><span class="arrow">→</span>
+  <span class="step">Resume</span><span class="arrow">→</span>
+  <span class="step">Target Job</span><span class="arrow">→</span>
+  <span class="step">Skill Gap</span><span class="arrow">→</span>
+  <span class="step">Assessment</span><span class="arrow">→</span>
+  <span class="step">Readiness</span>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="cg-card">
+      <h4 class="mb-1">Candidate Profile</h4>
+      <p class="text-muted">Name and email come from your account. Add your education, skills and experience below.</p>
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input class="form-control" value="{{ user.name }}" disabled>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input class="form-control" value="{{ user.email }}" disabled>
+      </div>
+      <form method="POST">
+        <div class="mb-3">
+          <label class="form-label">Education</label>
+          <input type="text" class="form-control" name="education" value="{{ profile.education or '' }}" placeholder="e.g. MCA, Final Year">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Skills <span class="text-muted">(comma-separated)</span></label>
+          <input type="text" class="form-control" name="skills" value="{{ profile.skills or '' }}" placeholder="e.g. JavaScript, HTML, CSS">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Experience</label>
+          <textarea class="form-control" name="experience" rows="3" placeholder="Internships, academic projects, etc.">{{ profile.experience or '' }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save &amp; Continue to Resume Upload</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

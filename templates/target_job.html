@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Target Job — Career GPS{% endblock %}
+{% block content %}
+<div class="stepper">
+  <span class="step">Profile</span><span class="arrow">→</span>
+  <span class="step">Resume</span><span class="arrow">→</span>
+  <span class="step active">Target Job</span><span class="arrow">→</span>
+  <span class="step">Skill Gap</span><span class="arrow">→</span>
+  <span class="step">Assessment</span><span class="arrow">→</span>
+  <span class="step">Readiness</span>
+</div>
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="cg-card">
+      <h4 class="mb-1">Select your Target Job</h4>
+      <p class="text-muted">We'll compare the languages this role needs against your profile skills.</p>
+      <form method="POST">
+        <div class="row g-2">
+          {% for job in jobs %}
+          <div class="col-md-6">
+            <label class="cg-card d-block p-3" style="cursor:pointer;">
+              <input type="radio" name="job_title" value="{{ job }}" class="form-check-input me-2" required>
+              {{ job }}
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Analyze Skill Gap</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

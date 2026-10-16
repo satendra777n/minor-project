@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Career Readiness — Career GPS{% endblock %}
+{% block content %}
+<h4 class="mb-1">Career Readiness Dashboard</h4>
+<p class="text-muted">Target Job: <strong>{{ job.title }}</strong></p>
+
+<div class="cg-card mb-4 text-center">
+  <h6 class="text-muted">Overall Career Readiness</h6>
+  <h1 class="display-4 fw-bold">{{ overall_readiness }}%</h1>
+  <div class="progress mx-auto" style="max-width: 500px;">
+    <div class="progress-bar" style="width: {{ overall_readiness }}%"></div>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  {% for item in per_language %}
+  <div class="col-md-4">
+    <div class="cg-card">
+      <h5>{{ item.language }}</h5>
+      <p class="mb-1">Score: <strong>{{ item.score }}%</strong> &middot; {{ item.level }}</p>
+      <div class="progress mb-2"><div class="progress-bar" style="width: {{ item.score }}%"></div></div>
+      {% if item.weak_areas %}
+        <p class="mb-1 text-muted small">Weak areas:</p>
+        {% for w in item.weak_areas %}<span class="skill-pill">{{ w }}</span>{% endfor %}
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="cg-card">
+  <h5 class="mb-3">Your Journey</h5>
+  <div class="stepper" style="margin-bottom:0;">
+    <span class="step active">Resume Analysis</span><span class="arrow">→</span>
+    <span class="step active">Target Job</span><span class="arrow">→</span>
+    <span class="step active">Skill Gap</span><span class="arrow">→</span>
+    <span class="step {{ 'active' if per_language and per_language[0].level != 'Not assessed' }}">Programming Assessment</span><span class="arrow">→</span>
+    <span class="step">Weak Areas</span><span class="arrow">→</span>
+    <span class="step">Learning Recommendation</span><span class="arrow">→</span>
+    <span class="step">Knowledge Check</span><span class="arrow">→</span>
+    <span class="step">Reassessment</span><span class="arrow">→</span>
+    <span class="step active">Career Readiness</span>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Skill Gap Dashboard — Career GPS{% endblock %}
+{% block content %}
+<div class="stepper">
+  <span class="step">Profile</span><span class="arrow">→</span>
+  <span class="step">Resume</span><span class="arrow">→</span>
+  <span class="step">Target Job</span><span class="arrow">→</span>
+  <span class="step active">Skill Gap</span><span class="arrow">→</span>
+  <span class="step">Assessment</span><span class="arrow">→</span>
+  <span class="step">Readiness</span>
+</div>
+
+<h4 class="mb-1">Skill Gap Dashboard</h4>
+<p class="text-muted">Target Job: <strong>{{ job.title }}</strong></p>
+
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="cg-card">
+      <h5><span class="badge badge-matched">Matched</span></h5>
+      {% for l in (gap.matched or '').split(',') if l.strip() %}
+        <span class="skill-pill">{{ l.strip() }}</span>
+      {% else %}<p class="text-muted mb-0">None yet.</p>{% endfor %}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="cg-card">
+      <h5><span class="badge badge-missing">Missing</span></h5>
+      {% for l in (gap.missing or '').split(',') if l.strip() %}
+        <span class="skill-pill">{{ l.strip() }}</span>
+      {% else %}<p class="text-muted mb-0">None — great job!</p>{% endfor %}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="cg-card">
+      <h5><span class="badge badge-weak">Weak</span></h5>
+      {% for l in (gap.weak or '').split(',') if l.strip() %}
+        <span class="skill-pill">{{ l.strip() }}</span>
+      {% else %}<p class="text-muted mb-0">None.</p>{% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="mt-4">
+  <a href="{{ url_for('missing_languages') }}" class="btn btn-primary">Start Language Assessments</a>
+</div>
+{% endblock %}

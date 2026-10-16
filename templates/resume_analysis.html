@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Resume Analysis — Career GPS{% endblock %}
+{% block content %}
+<div class="stepper">
+  <span class="step">Profile</span><span class="arrow">→</span>
+  <span class="step active">Resume</span><span class="arrow">→</span>
+  <span class="step">Target Job</span><span class="arrow">→</span>
+  <span class="step">Skill Gap</span><span class="arrow">→</span>
+  <span class="step">Assessment</span><span class="arrow">→</span>
+  <span class="step">Readiness</span>
+</div>
+
+<div class="cg-card mb-3">
+  <h4>Resume Analysis</h4>
+  {% if resume %}
+    <p class="text-muted mb-2">File: <strong>{{ resume.filename }}</strong></p>
+    <p class="mb-1">Skills detected in this resume:</p>
+    <div class="mb-3">
+      {% for s in (resume.extracted_skills or '').split(',') if s.strip() %}
+        <span class="skill-pill">{{ s.strip() }}</span>
+      {% else %}
+        <span class="text-muted">No known programming skills were detected in the text.</span>
+      {% endfor %}
+    </div>
+    <p class="mb-1">Your full profile skill list (resume + manually entered):</p>
+    <div>
+      {% for s in (profile.skills or '').split(',') if s.strip() %}
+        <span class="skill-pill">{{ s.strip() }}</span>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted">No resume uploaded yet.</p>
+    <a href="{{ url_for('resume_upload') }}" class="btn btn-primary btn-sm">Upload Resume</a>
+  {% endif %}
+</div>
+
+<a href="{{ url_for('target_job') }}" class="btn btn-primary">Continue to Target Job Selection</a>
+{% endblock %}

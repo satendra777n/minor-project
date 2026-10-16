@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ result.language.name }} Result — Career GPS{% endblock %}
+{% block content %}
+<div class="stepper">
+  <span class="step">Assessment</span><span class="arrow">→</span>
+  <span class="step active">Result</span><span class="arrow">→</span>
+  <span class="step">Learning</span><span class="arrow">→</span>
+  <span class="step">Reassessment</span><span class="arrow">→</span>
+  <span class="step">Readiness</span>
+</div>
+
+<h4 class="mb-3">{{ result.language.name }} Assessment Result</h4>
+
+<div class="row g-3">
+  <div class="col-md-3 col-6">
+    <div class="cg-card text-center"><h2 class="mb-0">{{ result.score_percent }}%</h2><small class="text-muted">Score</small></div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="cg-card text-center"><h2 class="mb-0">{{ result.skill_level }}</h2><small class="text-muted">Skill Level</small></div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="cg-card text-center"><h2 class="mb-0 text-success">{{ result.correct_answers }}</h2><small class="text-muted">Correct</small></div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="cg-card text-center"><h2 class="mb-0 text-danger">{{ result.incorrect_answers }}</h2><small class="text-muted">Incorrect</small></div>
+  </div>
+</div>
+
+<div class="cg-card mt-3">
+  <div class="d-flex justify-content-between mb-1"><span>Score</span><span>{{ result.score_percent }}%</span></div>
+  <div class="progress"><div class="progress-bar" style="width: {{ result.score_percent }}%"></div></div>
+</div>
+
+<div class="cg-card mt-3">
+  <h5>Weak Areas</h5>
+  {% for t in weak_topics %}
+    <span class="skill-pill">{{ t }}</span>
+  {% else %}
+    <p class="text-muted mb-0">No weak topics identified — strong performance across the board.</p>
+  {% endfor %}
+</div>
+
+<div class="mt-3 d-flex gap-2">
+  <a href="{{ url_for('learning_recommendations', language=result.language.name) }}" class="btn btn-primary">View Learning Recommendations</a>
+  <a href="{{ url_for('missing_languages') }}" class="btn btn-outline-primary">Back to Languages</a>
+</div>
+{% endblock %}

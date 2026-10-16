@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Resume Upload — Career GPS{% endblock %}
+{% block content %}
+<div class="stepper">
+  <span class="step">Profile</span><span class="arrow">→</span>
+  <span class="step active">Resume</span><span class="arrow">→</span>
+  <span class="step">Target Job</span><span class="arrow">→</span>
+  <span class="step">Skill Gap</span><span class="arrow">→</span>
+  <span class="step">Assessment</span><span class="arrow">→</span>
+  <span class="step">Readiness</span>
+</div>
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="cg-card">
+      <h4 class="mb-1">Upload your Resume</h4>
+      <p class="text-muted">PDF or DOCX. We'll scan it for programming languages and merge them into your profile skills.</p>
+      <form method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+          <input type="file" class="form-control" name="resume" accept=".pdf,.docx" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload &amp; Analyze</button>
+        <a href="{{ url_for('target_job') }}" class="btn btn-link">Skip for now</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

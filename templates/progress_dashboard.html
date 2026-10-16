@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Progress Dashboard — Career GPS{% endblock %}
+{% block content %}
+<h4 class="mb-1">Progress / Growth Dashboard</h4>
+<p class="text-muted">Every attempt across every language you've assessed.</p>
+
+<div class="cg-card mb-3">
+  <h5>Improvement from Reassessments</h5>
+  {% for r in reassessments %}
+  <div class="mb-3">
+    <div class="d-flex justify-content-between">
+      <span>{{ r.language.name }}</span>
+      <span class="{{ 'text-success' if r.improvement >= 0 else 'text-danger' }}">
+        {{ r.before_score }}% → {{ r.after_score }}% ({{ '+' if r.improvement >= 0 else '' }}{{ r.improvement }}%)
+      </span>
+    </div>
+    <div class="progress"><div class="progress-bar" style="width: {{ r.after_score }}%"></div></div>
+  </div>
+  {% else %}
+  <p class="text-muted mb-0">No reassessments yet — complete an assessment, review learning resources, then reassess.</p>
+  {% endfor %}
+</div>
+
+<div class="cg-card">
+  <h5>All Attempts</h5>
+  <table class="table">
+    <thead><tr><th>Language</th><th>Attempt</th><th>Score</th><th>Level</th><th>Correct / Total</th></tr></thead>
+    <tbody>
+      {% for r in results %}
+      <tr>
+        <td>{{ r.language.name }}</td>
+        <td>{{ r.attempt_number }}</td>
+        <td>{{ r.score_percent }}%</td>
+        <td>{{ r.skill_level }}</td>
+        <td>{{ r.correct_answers }} / {{ r.total_questions }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="text-muted">No assessments taken yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Reassessment Result — Career GPS{% endblock %}
+{% block content %}
+<div class="stepper">
+  <span class="step">Learning</span><span class="arrow">→</span>
+  <span class="step active">Reassessment</span><span class="arrow">→</span>
+  <span class="step">Readiness</span>
+</div>
+
+<h4 class="mb-3">{{ reassess.language.name }} — Before vs. After</h4>
+
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="cg-card text-center">
+      <h6 class="text-muted">Before Learning</h6>
+      <h2>{{ reassess.before_score }}%</h2>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="cg-card text-center">
+      <h6 class="text-muted">After Learning</h6>
+      <h2>{{ reassess.after_score }}%</h2>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="cg-card text-center">
+      <h6 class="text-muted">Improvement</h6>
+      <h2 class="{{ 'text-success' if reassess.improvement >= 0 else 'text-danger' }}">
+        {{ '+' if reassess.improvement >= 0 else '' }}{{ reassess.improvement }}%
+      </h2>
+    </div>
+  </div>
+</div>
+
+<div class="cg-card mt-3">
+  <div class="d-flex justify-content-between mb-1"><span>Before</span><span>{{ reassess.before_score }}%</span></div>
+  <div class="progress mb-3"><div class="progress-bar bg-secondary" style="width: {{ reassess.before_score }}%"></div></div>
+  <div class="d-flex justify-content-between mb-1"><span>After</span><span>{{ reassess.after_score }}%</span></div>
+  <div class="progress"><div class="progress-bar" style="width: {{ reassess.after_score }}%"></div></div>
+</div>
+
+<div class="mt-4">
+  <a href="{{ url_for('progress_dashboard') }}" class="btn btn-primary">View Growth Dashboard</a>
+  <a href="{{ url_for('readiness_dashboard') }}" class="btn btn-outline-primary">View Career Readiness</a>
+</div>
+{% endblock %}

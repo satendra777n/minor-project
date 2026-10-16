@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Missing Languages — Career GPS{% endblock %}
+{% block content %}
+<div class="stepper">
+  <span class="step">Skill Gap</span><span class="arrow">→</span>
+  <span class="step active">Choose Language</span><span class="arrow">→</span>
+  <span class="step">Assessment</span><span class="arrow">→</span>
+  <span class="step">Learning</span><span class="arrow">→</span>
+  <span class="step">Reassessment</span><span class="arrow">→</span>
+  <span class="step">Readiness</span>
+</div>
+
+<h4 class="mb-3">Choose a Language to Assess</h4>
+<p class="text-muted">The same assessment engine is used whether you have one missing language or several — take each one separately.</p>
+
+<div class="row g-3">
+  {% for lang in missing + weak %}
+  <div class="col-md-4">
+    <div class="cg-card d-flex flex-column">
+      <h5>{{ lang }} <span class="badge {{ 'badge-weak' if lang in weak else 'badge-missing' }}">{{ 'Weak' if lang in weak else 'Missing' }}</span></h5>
+      {% if lang in latest_scores %}
+        {% set r = latest_scores[lang] %}
+        <p class="mb-2">Last score: <strong>{{ r.score_percent }}%</strong> ({{ r.skill_level }})</p>
+        <div class="mt-auto d-flex gap-2">
+          <a href="{{ url_for('assessment_result', result_id=r.id) }}" class="btn btn-outline-primary btn-sm">View Result</a>
+          <a href="{{ url_for('reassessment', language=lang) }}" class="btn btn-primary btn-sm">Reassess</a>
+        </div>
+      {% else %}
+        <p class="text-muted flex-grow-1">Not assessed yet.</p>
+        <a href="{{ url_for('assessment', language=lang) }}" class="btn btn-primary btn-sm mt-auto">Start Assessment</a>
+      {% endif %}
+    </div>
+  </div>
+  {% else %}
+  <p class="text-muted">No missing or weak languages to assess — you're fully matched for this role.</p>
+  {% endfor %}
+</div>
+{% endblock %}

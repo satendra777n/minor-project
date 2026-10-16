@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Learning Recommendations — Career GPS{% endblock %}
+{% block content %}
+<div class="stepper">
+  <span class="step">Assessment</span><span class="arrow">→</span>
+  <span class="step">Result</span><span class="arrow">→</span>
+  <span class="step active">Learning</span><span class="arrow">→</span>
+  <span class="step">Reassessment</span><span class="arrow">→</span>
+  <span class="step">Readiness</span>
+</div>
+
+<h4 class="mb-1">Personalized Learning — {{ language }}</h4>
+{% if result %}
+<p class="text-muted">Based on your {{ result.score_percent }}% score and weak areas below.</p>
+{% endif %}
+
+<div class="row g-3">
+  {% for rec in recommendations %}
+  <div class="col-md-4">
+    <div class="cg-card">
+      <h6 class="text-uppercase text-muted mb-1">{{ rec.topic }}</h6>
+      <p class="mb-2 fw-semibold">{{ rec.platform }}</p>
+      <a href="{{ rec.url }}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary">Open Resource ↗</a>
+    </div>
+  </div>
+  {% else %}
+  <p class="text-muted">No specific weak areas found — you can still explore the general {{ language }} track on freeCodeCamp, Coursera, edX or Codecademy.</p>
+  {% endfor %}
+</div>
+
+<div class="mt-4">
+  <p class="text-muted">Studied up? Come back and retake the assessment to measure your improvement.</p>
+  <a href="{{ url_for('reassessment', language=language) }}" class="btn btn-primary">Take Knowledge Check / Reassessment</a>
+</div>
+{% endblock %}

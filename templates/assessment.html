@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ language }} Assessment — Career GPS{% endblock %}
+{% block content %}
+<div class="stepper">
+  <span class="step">Skill Gap</span><span class="arrow">→</span>
+  <span class="step">Choose Language</span><span class="arrow">→</span>
+  <span class="step active">{{ 'Reassessment' if is_reassessment else 'Assessment' }}</span><span class="arrow">→</span>
+  <span class="step">Result</span><span class="arrow">→</span>
+  <span class="step">Learning</span><span class="arrow">→</span>
+  <span class="step">Readiness</span>
+</div>
+
+<h4 class="mb-1">{{ language }} {{ 'Reassessment' if is_reassessment else 'Assessment' }}</h4>
+<p class="text-muted">{{ questions|length }} questions covering syntax, functions, data structures, control flow and practical usage.</p>
+
+<form method="POST" id="assessment-form">
+  {% for q in questions %}
+  <div class="cg-card question-block mb-3">
+    <p class="mb-1"><strong>Q{{ loop.index }}.</strong> <span class="badge bg-light text-dark">{{ q.topic }}</span></p>
+    {% if '\n' in q.prompt %}
+      <pre class="code-snippet">{{ q.prompt }}</pre>
+    {% else %}
+      <p>{{ q.prompt }}</p>
+    {% endif %}
+    <div data-question="q_{{ q.id }}">
+      {% for opt in ['a','b','c','d'] %}
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="q_{{ q.id }}" id="q{{ q.id }}_{{ opt }}" value="{{ opt }}" required>
+        <label class="form-check-label" for="q{{ q.id }}_{{ opt }}">{{ q['option_' + opt] if q['option_' + opt] is defined else q.options[opt] }}</label>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary btn-lg">Submit Assessment</button>
+</form>
+{% endblock %}
